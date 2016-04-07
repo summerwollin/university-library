@@ -1,26 +1,10 @@
-<section>
-  <div class="sideLink">
-    <a href="/authors">
-      <img class="sideImg" src="/images/authors.jpg" alt="...">
-      <h3 class="sideH3">Authors</h3>
-    </a>
-  </div>
-
-  <div class="sideLink">
-    <a href="/books">
-      <img class="sideImg" src="/images/books.jpg" alt="...">
-      <h3 class="sideH3">Books</h3>
-    </a>
-  </div>
-
-</section>
-
-
 {{#books}}
   <article>
     <img src="" alt="">
-    <h2>{{bookTitle}}</h2>
-    <h3>By {{author}}</h3>
+    <h2>{{title}}</h2>
+    <h3>
+      {{authors}}
+    </h3>
     <h3><i>{{genre}}</i></h3>
     <p>{{description}}</p>
   </article>
