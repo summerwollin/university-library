@@ -6,6 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 router.get('/books', function(req, res, next) {
+  knex('books').where({})
   res.render('books');
 });
 
