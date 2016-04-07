@@ -1,0 +1,18 @@
+<section>
+  <a href="/authors">
+    <div><h3>Authors<h3><img src="../images/authors.jpg" alt="..."></div>
+  </a>
+  <a href="/books">
+    <div><h3>Books<h3><img src="../images/books.jpg" alt="..."></div>
+  </a>
+</section>
+
+{{#books}}
+  <article>
+    <img src="" alt="">
+    <h2>{{bookTitle}}</h2>
+    <h3>By {{author}}</h3>
+    <h3><i>{{genre}}</i></h3>
+    <p>{{description}}</p>
+  </article>
+{{/books}}
