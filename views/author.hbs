@@ -1,0 +1,11 @@
+<article>
+    <img src="" alt="">
+    <h2>{{author.first_name}} {{author.last_name}}</h2>
+    <h3>
+    {{#books}}
+  {{title}},
+    {{/books}}
+  </h3>
+    <h3><i>{{book.genre}}</i></h3>
+    <p>{{book.description}}</p>
+</article>
