@@ -111,6 +111,27 @@ router.get('/authors/add', function(req, res, next) {
   })
 });
 
+router.post('/authors/add', function(req, res, next) {
+
+  function flatten(arr) {
+    const flat = [].concat(...arr)
+    return flat.some(Array.isArray) ? flatten(flat) : flat;
+  }
+
+  knex('authors').insert({first_name: req.body.first, last_name: req.body.last, biography: req.body.bio, portrait_url: req.body.image})
+  .returning('id')
+  .then(function(id) {
+    var books = req.body.books;
+    var bibliographies = flatten([books]).map(function(book){
+      return {author_id: id[0], book_id: book};
+    });
+
+    knex('bibliographies').insert(bibliographies).then(function(){
+      res.redirect('/authors');
+    });
+  });
+});
+
 router.get('/authors/:id', function(req, res, next) {
   knex('authors').where({'authors.id': req.params.id})
   .then(function(author) {
