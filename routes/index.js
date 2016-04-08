@@ -44,6 +44,27 @@ router.get('/books', function(req, res, next) {
   });
 });
 
+router.get('/authors', function(req, res, next) {
+  knex('authors').innerJoin('bibliographies', 'authors.id', 'bibliographies.author_id')
+  .innerJoin('books', 'bibliographies.book_id', 'books.id')
+  .orderBy('authors.id')
+  .then(function(results) {
+    var prevElement = null;
+    var concatenatedResults = [];
+    results.forEach(function(element) {
+      if ((prevElement === null) || (prevElement.author_id !== element.author_id)) {
+        element.books = element.title;
+        concatenatedResults.push(element);
+        prevElement = element;
+      }
+      else {
+        prevElement.books += ", " + element.title;
+      }
+    })
+    res.render('authors', {authors: concatenatedResults});
+  });
+});
+
 router.get('/authors/:id', function(req, res, next) {
   knex('authors').where({'authors.id': req.params.id})
   .then(function(author) {
