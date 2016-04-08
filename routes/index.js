@@ -61,6 +61,7 @@ router.post('/books/add', function(req, res, next) {
 });
 
 router.get('/books/:id', function(req, res, next) {
+  console.log(req.params.id);
   knex('books').where({'books.id': req.params.id})
   .then(function(book) {
     knex('bibliographies').where({'bibliographies.book_id': book[0].id})
@@ -131,6 +132,7 @@ router.post('/authors/add', function(req, res, next) {
     });
   });
 });
+
 
 router.get('/authors/:id', function(req, res, next) {
   knex('authors').where({'authors.id': req.params.id})

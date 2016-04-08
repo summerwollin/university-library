@@ -1,24 +1,7 @@
-<!-- <section>
-  <div class="sideLink">
-    <a href="/authors">
-      <img class="sideImg" src="/images/authors.jpg" alt="...">
-      <h3 class="sideH3">Authors</h3>
-    </a>
-  </div>
-
-  <div class="sideLink">
-    <a href="/books">
-      <img class="sideImg" src="/images/books.jpg" alt="...">
-      <h3 class="sideH3">Books</h3>
-    </a>
-  </div>
-
-</section> -->
-
 <article>
     <img class="bookCover" src="{{book.cover_url}}" alt="">
     <h2>{{book.title}}</h2>
-    <a href="/books/{{book.id}}/delete"><button type="button" name="delete">Delete</button></a>
+    <button class="delete-btn" data-book-id="{{book.id}}" type="button" name="delete">Delete</button>
     <h3>
     {{#authors}}
   {{first_name}} {{last_name}},
@@ -27,3 +10,18 @@
     <h3><i>{{book.genre}}</i></h3>
     <p>{{book.description}}</p>
 </article>
+
+<script type="text/javascript">
+$('.delete-btn').on('click', function(){
+  var book_id = $(this).data('book-id');
+  var article = $(this).parent();
+
+  $.ajax({
+    url: '/books/' + book_id,
+    type: 'DELETE',
+    success: function(result) {
+      $(article).slideUp();
+    }
+  });
+});
+</script>
