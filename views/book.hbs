@@ -18,6 +18,7 @@
 <article>
     <img class="bookCover" src="{{book.cover_url}}" alt="">
     <h2>{{book.title}}</h2>
+    <a href="/books/{{book.id}}/delete"><button type="button" name="delete">Delete</button></a>
     <h3>
     {{#authors}}
   {{first_name}} {{last_name}},

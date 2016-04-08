@@ -6,22 +6,7 @@ var knex = require('knex')(require('../knexfile')['development']);
 router.get('/', function(req, res, next) {
   res.render('index');
 });
-router.get('/books/:id', function(req, res, next) {
-  knex('books').where({'books.id': req.params.id})
-  .then(function(book) {
-    knex('bibliographies').where({'bibliographies.book_id': book[0].id})
-    .pluck('author_id')
-    .then(function(authorIds) {
-      knex('authors').whereIn('id', authorIds)
-      .then(function(authors) {
-        res.render('book', {
-          book: book[0],
-          authors: authors
-        })
-      })
-    })
-  })
-});
+
 
 router.get('/books', function(req, res, next) {
   knex('books').innerJoin('bibliographies', 'books.id', 'bibliographies.book_id')
@@ -41,6 +26,33 @@ router.get('/books', function(req, res, next) {
       }
     })
     res.render('books', {books: concatenatedResults});
+  });
+});
+
+router.get('/books/:id', function(req, res, next) {
+  knex('books').where({'books.id': req.params.id})
+  .then(function(book) {
+    knex('bibliographies').where({'bibliographies.book_id': book[0].id})
+    .pluck('author_id')
+    .then(function(authorIds) {
+      knex('authors').whereIn('id', authorIds)
+      .then(function(authors) {
+        res.render('book', {
+          book: book[0],
+          authors: authors
+        })
+      })
+    })
+  })
+});
+
+router.get('/books/:id/delete', function(req, res, next) {
+  knex('bibliographies').where({'bibliographies.book_id': req.params.id}).del()
+  .then(function() {
+    knex('books').where({'books.id': req.params.id}).del()
+  })
+  .then(function() {
+    res.redirect('/books')
   });
 });
 
