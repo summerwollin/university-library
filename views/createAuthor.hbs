@@ -1,0 +1,29 @@
+<form action="/books" method="post">
+    <div class="form-group">
+        <label for="first">First Name</label>
+        <input type="text" class="form-control" name="first" value="">
+    </div>
+    <div class="form-group">
+        <label for="last">Last Name</label>
+        <input type="text" class="form-control" name="last" value="">
+    </div>
+    <div class="form-group">
+        <label for="image">Portrait URL</label>
+        <input type="text" class="form-control" name="image" value="">
+    </div>
+    <div class="form-group">
+        <label for="bio">Biography</label>
+        <input type="text" class="form-control" name="bio" value="">
+    </div>
+    <div class="form-group">
+        <label for="books">Books</label>
+        <input type="text" class="form-control" name="books" value="" readonly><br>
+        <select name="books">
+          <option value="test1">test1</option>
+          <option value="test2">test2</option>
+        </select>
+        <button type="button" name="button">Add Book</button>
+        <button type="button" name="button">Remove</button>
+    </div>
+    <button class="btn btn-primary" type="submit" name="button">Add Author</button>
+</form>

@@ -1,0 +1,29 @@
+<form action="/books" method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" name="title" value="">
+    </div>
+    <div class="form-group">
+        <label for="genre">Genre</label>
+        <input type="text" class="form-control" name="genre" value="">
+    </div>
+    <div class="form-group">
+        <label for="image">Cover Image URL</label>
+        <input type="text" class="form-control" name="image" value="">
+    </div>
+    <div class="form-group">
+        <label for="desc">Description</label>
+        <input type="text" class="form-control" name="desc" value="">
+    </div>
+    <div class="form-group">
+        <label for="authors">Authors</label>
+        <input type="text" class="form-control" name="authors" value="" readonly><br>
+        <select name="authors">
+          <option value="test1">test1</option>
+          <option value="test2">test2</option>
+        </select>
+        <button type="button" name="button">Add Author</button>
+        <button type="button" name="button">Remove</button>
+    </div>
+    <button class="btn btn-primary" type="submit" name="button">Add Book</button>
+</form>

@@ -29,6 +29,10 @@ router.get('/books', function(req, res, next) {
   });
 });
 
+router.get('/books/add', function(req, res, next) {
+  res.render('createBooks');
+})
+
 router.get('/books/:id', function(req, res, next) {
   knex('books').where({'books.id': req.params.id})
   .then(function(book) {
@@ -76,6 +80,10 @@ router.get('/authors', function(req, res, next) {
     res.render('authors', {authors: concatenatedResults});
   });
 });
+
+router.get('/authors/add', function(req, res, next) {
+  res.render('createAuthor');
+})
 
 router.get('/authors/:id', function(req, res, next) {
   knex('authors').where({'authors.id': req.params.id})
