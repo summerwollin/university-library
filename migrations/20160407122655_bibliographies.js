@@ -1,9 +1,8 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('bibliographies', function(table) {
-    table.increments();
-    table.integer('book_id').unsigned().references('id').inTable('books');
-    table.integer('author_id').unsigned().references('id').inTable('authors');
+    table.integer('book_id').references('books.id').onDelete('cascade').onUpdate('cascade');
+    table.integer('author_id').references('authors.id').onDelete('cascade').onUpdate('cascade');
   })
 };
 

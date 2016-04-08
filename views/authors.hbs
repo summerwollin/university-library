@@ -3,10 +3,25 @@
   <article>
     <img class="portrait" src="{{portrait_url}}" alt="">
     <h2>{{first_name}} {{last_name}}</h2>
-    <a href="/authors/{{id}}/delete"><button type="button" name="delete">Delete</button></a>
+    <button class="delete-btn" data-author-id="{{id}}" type="button" name="delete">Delete</button>
     <h3>
     {{books}}
   </h3>
     <p>{{biography}}</p>
   </article>
 {{/authors}}
+
+<script type="text/javascript">
+$('.delete-btn').on('click', function(){
+  var author_id = $(this).data('author-id');
+  var article = $(this).parent();
+
+  $.ajax({
+    url: '/authors/' + author_id,
+    type: 'DELETE',
+    success: function(result) {
+      $(article).slideUp();
+    }
+  });
+});
+</script>

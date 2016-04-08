@@ -1,4 +1,4 @@
-<form action="/books" method="post">
+<form action="/books/add" method="post">
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control" name="title" value="">
@@ -16,14 +16,10 @@
         <input type="text" class="form-control" name="desc" value="">
     </div>
     <div class="form-group">
-        <label for="authors">Authors</label>
-        <input type="text" class="form-control" name="authors" value="" readonly><br>
-        <select name="authors">
-          <option value="test1">test1</option>
-          <option value="test2">test2</option>
-        </select>
-        <button type="button" name="button">Add Author</button>
-        <button type="button" name="button">Remove</button>
+      <label for"authors">Authors</label><br>
+          {{#authors}}
+            <label><input type="checkbox" name="authors" value="{{author.id}}">{{first_name}} {{last_name}}</label>
+          {{/authors}}
     </div>
     <button class="btn btn-primary" type="submit" name="button">Add Book</button>
 </form>

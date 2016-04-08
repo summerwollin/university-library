@@ -30,7 +30,22 @@ router.get('/books', function(req, res, next) {
 });
 
 router.get('/books/add', function(req, res, next) {
-  res.render('createBooks');
+  knex('authors')
+  .then(function(authors) {
+      res.render('createBooks', {authors: authors});
+  })
+});
+
+router.post('/books/add', function(req, res, next) {
+  knex('books').insert({title: req.body.title, genre: req.body.genre, description: req.body.desc, cover_url: req.body.image})
+  .returning('id')
+  .then(function(id) {
+      if (typeof req.body.authors === 'string') {
+        knex('bibliographies').insert({book_id: id, author_id: req.body.authors})
+      } else {
+        // req.body.authors.map
+      }
+    })
 })
 
 router.get('/books/:id', function(req, res, next) {
@@ -50,13 +65,13 @@ router.get('/books/:id', function(req, res, next) {
   })
 });
 
-router.get('/books/:id/delete', function(req, res, next) {
+router.delete('/books/:id', function(req, res, next) {
   knex('bibliographies').where({'bibliographies.book_id': req.params.id}).del()
   .then(function() {
     knex('books').where({'books.id': req.params.id}).del()
   })
   .then(function() {
-    res.redirect('/books')
+    res.status(200).json({book: 'deleted'});
   });
 });
 
@@ -82,8 +97,11 @@ router.get('/authors', function(req, res, next) {
 });
 
 router.get('/authors/add', function(req, res, next) {
-  res.render('createAuthor');
-})
+  knex('books')
+  .then(function(books) {
+      res.render('createAuthor', {books: books});
+  })
+});
 
 router.get('/authors/:id', function(req, res, next) {
   knex('authors').where({'authors.id': req.params.id})
@@ -102,13 +120,13 @@ router.get('/authors/:id', function(req, res, next) {
   })
 });
 
-router.get('/authors/:id/delete', function(req, res, next) {
+router.delete('/authors/:id', function(req, res, next) {
   knex('bibliographies').where({'bibliographies.author_id': req.params.id}).del()
   .then(function() {
     knex('authors').where({'authors.id': req.params.id}).del()
   })
   .then(function() {
-    res.redirect('/authors')
+    res.status(200).json({book: 'deleted'});
   });
 });
 

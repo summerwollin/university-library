@@ -19,8 +19,9 @@
         <label for="books">Books</label>
         <input type="text" class="form-control" name="books" value="" readonly><br>
         <select name="books">
-          <option value="test1">test1</option>
-          <option value="test2">test2</option>
+          {{#books}}
+            <option value="{{title}}">{{title}}</option>
+          {{/books}}
         </select>
         <button type="button" name="button">Add Book</button>
         <button type="button" name="button">Remove</button>
