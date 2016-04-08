@@ -44,4 +44,21 @@ router.get('/books', function(req, res, next) {
   });
 });
 
+router.get('/authors/:id', function(req, res, next) {
+  knex('authors').where({'authors.id': req.params.id})
+  .then(function(author) {
+    knex('bibliographies').where({'bibliographies.author_id': author[0].id})
+    .pluck('book_id')
+    .then(function(bookIds) {
+      knex('books').whereIn('id', bookIds)
+      .then(function(books) {
+        res.render('author', {
+          author: author[0],
+          books: books
+        })
+      })
+    })
+  })
+});
+
 module.exports = router;
