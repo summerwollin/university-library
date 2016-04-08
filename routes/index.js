@@ -94,4 +94,14 @@ router.get('/authors/:id', function(req, res, next) {
   })
 });
 
+router.get('/authors/:id/delete', function(req, res, next) {
+  knex('bibliographies').where({'bibliographies.author_id': req.params.id}).del()
+  .then(function() {
+    knex('authors').where({'authors.id': req.params.id}).del()
+  })
+  .then(function() {
+    res.redirect('/authors')
+  });
+});
+
 module.exports = router;

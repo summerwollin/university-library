@@ -1,6 +1,7 @@
 <article>
     <img class="portrait" src="{{author.portrait_url}}" alt="">
     <h2>{{author.first_name}} {{author.last_name}}</h2>
+    <a href="/authors/{{author.id}}/delete"><button type="button" name="delete">Delete</button></a>
     <h3>
     {{#books}}
   {{title}}
