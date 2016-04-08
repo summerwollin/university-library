@@ -1,0 +1,25 @@
+<form action="/books/{{book.id}}/edit" method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" name="title" value="{{book.title}}">
+    </div>
+    <div class="form-group">
+        <label for="genre">Genre</label>
+        <input type="text" class="form-control" name="genre" value="{{book.genre}}">
+    </div>
+    <div class="form-group">
+        <label for="image">Cover Image URL</label>
+        <input type="text" class="form-control" name="image" value="{{book.cover_url}}">
+    </div>
+    <div class="form-group">
+        <label for="desc">Description</label>
+        <input type="text" class="form-control" name="desc" value="{{book.description}}">
+    </div>
+    <div class="form-group">
+      <label for"authors">Authors</label><br>
+          {{#authors}}
+            <label><input type="checkbox" name="authors" value="{{id}}">{{first_name}} {{last_name}}</label>
+          {{/authors}}
+    </div>
+    <button class="btn btn-primary" type="submit">Edit Book</button>
+</form>

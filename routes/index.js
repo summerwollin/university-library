@@ -84,6 +84,38 @@ router.delete('/books/:id', function(req, res, next) {
   });
 });
 
+router.get('/books/:id/edit', function(req, res, next) {
+  knex('books').where({'books.id': req.params.id})
+  .then(function(book) {
+    knex('authors')
+      .then(function(authors) {
+        res.render('editBook', {
+          book: book[0],
+          authors: authors
+        })
+      })
+    })
+});
+
+router.post('/books/:id/edit', function(req, res, next) {
+
+  function flatten(arr) {
+    const flat = [].concat(...arr)
+    return flat.some(Array.isArray) ? flatten(flat) : flat;
+  }
+
+  knex('books').where({'id': parseInt(req.params.id)}).update({title: req.body.title, genre: req.body.genre, description: req.body.desc, cover_url: req.body.image})
+    .then(function() {
+      var authors = req.body.authors;
+      var bibliographies = flatten([authors]).map(function(author){
+        return {book_id: parseInt(req.params.id), author_id: author};
+      });
+    knex('bibliographies').insert(bibliographies).then(function(){
+      res.redirect('/books');
+    });
+  });
+});
+
 router.get('/authors', function(req, res, next) {
   knex('authors').innerJoin('bibliographies', 'authors.id', 'bibliographies.author_id')
   .innerJoin('books', 'bibliographies.book_id', 'books.id')
@@ -133,7 +165,6 @@ router.post('/authors/add', function(req, res, next) {
   });
 });
 
-
 router.get('/authors/:id', function(req, res, next) {
   knex('authors').where({'authors.id': req.params.id})
   .then(function(author) {
@@ -158,6 +189,39 @@ router.delete('/authors/:id', function(req, res, next) {
   })
   .then(function() {
     res.status(200).json({book: 'deleted'});
+  });
+});
+
+router.get('/authors/:id/edit', function(req, res, next) {
+  knex('authors').where({'authors.id': req.params.id})
+  .then(function(author) {
+    knex('books')
+      .then(function(books) {
+        console.log(books);
+        res.render('editAuthor', {
+          author: author[0],
+          books: books
+        })
+      })
+    })
+})
+
+router.post('/authors/:id/edit', function(req, res, next) {
+
+  function flatten(arr) {
+    const flat = [].concat(...arr)
+    return flat.some(Array.isArray) ? flatten(flat) : flat;
+  }
+
+  knex('authors').where({'id': parseInt(req.params.id)}).update({first_name: req.body.first, last_name: req.body.last, biography: req.body.bio, portrait_url: req.body.image})
+    .then(function() {
+      var books = req.body.books;
+      var bibliographies = flatten([books]).map(function(book){
+        return {author_id: parseInt(req.params.id), book_id: book};
+      });
+    knex('bibliographies').insert(bibliographies).then(function(){
+      res.redirect('/authors');
+    });
   });
 });
 
