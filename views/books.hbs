@@ -4,7 +4,7 @@
   <article>
     <img class="bookCover" src="{{cover_url}}" alt="">
     <h2>{{title}}</h2>
-    <button class="delete-btn" data-book-id="{{id}}" type="button" name="delete">Delete</button>
+    <button class="delete-btn" data-book-id="{{book_id}}" type="button" name="delete">Delete</button>
     <h3>
       {{authors}}
     </h3>
@@ -23,7 +23,6 @@ $('.delete-btn').on('click', function(){
     url: '/books/' + book_id,
     type: 'DELETE',
     success: function(result) {
-      // console.log('-- remove from page', result);
       $(article).slideUp();
     }
   });

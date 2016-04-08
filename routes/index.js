@@ -16,6 +16,8 @@ router.get('/books', function(req, res, next) {
     var prevElement = null;
     var concatenatedResults = [];
     results.forEach(function(element) {
+      console.log('bookid>>', element.book_id);
+      console.log('booktitle>>', element.first_name);
       if ((prevElement === null) || (prevElement.book_id !== element.book_id)) {
         element.authors = element.first_name + " " + element.last_name;
         concatenatedResults.push(element);
@@ -36,17 +38,27 @@ router.get('/books/add', function(req, res, next) {
   })
 });
 
+
 router.post('/books/add', function(req, res, next) {
+
+  function flatten(arr) {
+    const flat = [].concat(...arr)
+    return flat.some(Array.isArray) ? flatten(flat) : flat;
+  }
+
   knex('books').insert({title: req.body.title, genre: req.body.genre, description: req.body.desc, cover_url: req.body.image})
   .returning('id')
   .then(function(id) {
-      if (typeof req.body.authors === 'string') {
-        knex('bibliographies').insert({book_id: id, author_id: req.body.authors})
-      } else {
-        // req.body.authors.map
-      }
-    })
-})
+    var authors = req.body.authors;
+    var bibliographies = flatten([authors]).map(function(author){
+      return {book_id: id[0], author_id: author};
+    });
+
+    knex('bibliographies').insert(bibliographies).then(function(){
+      res.redirect('/books');
+    });
+  });
+});
 
 router.get('/books/:id', function(req, res, next) {
   knex('books').where({'books.id': req.params.id})
@@ -66,11 +78,7 @@ router.get('/books/:id', function(req, res, next) {
 });
 
 router.delete('/books/:id', function(req, res, next) {
-  knex('bibliographies').where({'bibliographies.book_id': req.params.id}).del()
-  .then(function() {
-    knex('books').where({'books.id': req.params.id}).del()
-  })
-  .then(function() {
+  knex('books').where({'id': req.params.id}).del().then(function() {
     res.status(200).json({book: 'deleted'});
   });
 });

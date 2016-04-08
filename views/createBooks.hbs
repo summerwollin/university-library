@@ -18,8 +18,8 @@
     <div class="form-group">
       <label for"authors">Authors</label><br>
           {{#authors}}
-            <label><input type="checkbox" name="authors" value="{{author.id}}">{{first_name}} {{last_name}}</label>
+            <label><input type="checkbox" name="authors" value="{{id}}">{{first_name}} {{last_name}}</label>
           {{/authors}}
     </div>
-    <button class="btn btn-primary" type="submit" name="button">Add Book</button>
+    <button class="btn btn-primary" type="submit">Add Book</button>
 </form>

@@ -3,7 +3,7 @@ module.exports = {
 
   development: {
     client: 'postgresql',
-    connection: 'postgres://localhost/galvanize-reads2'
+    connection: 'postgres://localhost/galvanize_reads'
   },
   pool: {
     min: 2,
