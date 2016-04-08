@@ -1,0 +1,25 @@
+<form action="/authors/edit" method="post">
+    <div class="form-group">
+        <label for="first">First Name</label>
+        <input type="text" class="form-control" name="first" value="{{author.first_name}}">
+    </div>
+    <div class="form-group">
+        <label for="last">Last Name</label>
+        <input type="text" class="form-control" name="last" value="{{author.last_name}}">
+    </div>
+    <div class="form-group">
+        <label for="image">Portrait URL</label>
+        <input type="text" class="form-control" name="image" value="{{author.portrait_url}}">
+    </div>
+    <div class="form-group">
+        <label for="bio">Biography</label>
+        <input type="text" class="form-control" name="bio" value="">
+    </div>
+    <div class="form-group">
+      <label for"books">Books</label><br>
+          {{#books}}
+            <label><input type="checkbox" name="books" value="{{id}}">{{title}}</label>
+          {{/books}}
+    </div>
+    <button class="btn btn-primary" type="submit" name="button">Add Author</button>
+</form>
