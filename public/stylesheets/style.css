@@ -2,20 +2,41 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+main {
+  width: 100%;
+  margin: 0;
+}
+.navbar {
+  border: none;
+  background-color: rgb(232,232,232);
+}
 a {
   color: #00B7FF;
+}
+.btn-primary {
+  background-color: rgb(43,61,78);
+  border: none;
 }
 .logo {
   width: 50px;
   height: 50px;
 }
 .mainImg {
-  width: 400px;
-  height: 350px;
+  height: 500px;
+}
+.caption {
+  margin-left: 300px;
+}
+.articleContainer {
+  background-color: rgb(232,232,232);
+  margin-left: 150px;
+  margin-right: 150px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 section {
-  margin-top: 180px;
+  margin-top: 100px;
+  float: left;
 }
 .sideImg {
   width: 200px;
@@ -41,4 +62,23 @@ section {
 .bookCover {
   width: 100px;
   height: 150px;
+}
+article {
+  width: 600px;
+  margin-left: 50px;
+  margin-bottom: 80px;
+}
+.name {
+  float: left;
+  width: 300px;
+  margin: 0;
+  margin-right: 100px;
+}
+.buttonGrp {
+  float: left;
+  width: 200px;
+  margin: 0;
+}
+.lineGrp {
+  height: 40px;
 }

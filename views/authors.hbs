@@ -1,16 +1,52 @@
-<a href="/authors/add"><button type="button" name="add">Add New Author</button></a>
-{{#authors}}
-  <article>
-    <img class="portrait" src="{{portrait_url}}" alt="">
-    <h2>{{first_name}} {{last_name}}</h2>
-    <button class="delete-btn" data-author-id="{{author_id}}" type="button" name="delete">Delete</button>
-    <a href="/authors/{{author_id}}/edit"><button type="button" name="edit">Edit Author</button></a>
-    <h3>
-    {{books}}
-  </h3>
-    <p>{{biography}}</p>
-  </article>
-{{/authors}}
+<a href="/authors/add"><button class="btn btn-primary" type="button" name="add">Add New Author</button></a>
+<h1>Total Authors: {{numAuthors}}</h1>
+
+<h3>Search By:</h3>
+
+<form action="/authors/filter" method="post">
+    <div class="form-group">
+        <label for="first">First Name</label>
+        <input type="text" class="form-control" name="first" value="">
+    </div>
+    <div class="form-group">
+        <label for="first">Last Name</label>
+        <input type="text" class="form-control" name="last" value="">
+    </div>
+    <button class="btn btn-primary" type="submit" name="button">filter</button>
+</form>
+
+<main>
+
+  <section>
+    <a href="/authors"><div class="sideLink">
+      <img class="sideImg" src="/images/authors.jpg" alt="" />
+      <h3 class="sideH3">Authors</h3>
+    </div></a>
+    <a href="/books"><div class="sideLink">
+      <img class="sideImg" src="/images/books.jpg" alt="" />
+      <h3 class="sideH3">Books</h3>
+    </div></a>
+  </section>
+
+<div class="articleContainer">
+  {{#authors}}
+    <article>
+      <img class="portrait" src="{{portrait_url}}" alt="">
+      <div class="lineGrp">
+        <a href="/authors/{{author_id}}"><h2 class="name">{{first_name}} {{last_name}}</h2></a>
+        <div class="buttonGrp">
+          <button class="delete-btn btn btn-primary" data-author-id="{{author_id}}" type="button" name="delete">Delete</button>
+          <a href="/authors/{{author_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Author</button></a>
+        </div>
+      </div>
+        {{books}}
+      </h3></h3>
+      <p>{{biography}}</p>
+    </article>
+  {{/authors}}
+</div>
+
+</main>
 
 <script type="text/javascript">
 $('.delete-btn').on('click', function(){

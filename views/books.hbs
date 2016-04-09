@@ -1,11 +1,43 @@
-<a href="/books/add"><button type="button" name="add">Add New Book</button></a>
+<a href="/books/add"><button class="btn btn-primary" type="button" name="add">Add New Book</button></a>
 
+<h1>Total Books: {{numBooks}}</h1>
+
+<h3>Filter By:</h3>
+
+<form action="/books/filter" method="post">
+    <div class="form-group">
+        <label for="genre">Genre</label>
+        <input type="text" class="form-control" name="genre" value="">
+    </div>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" name="title" value="">
+    </div>
+    <button class="btn btn-primary" type="submit" name="button">filter</button>
+</form>
+
+<section>
+  <a href="/authors"><div class="sideLink">
+    <img class="sideImg" src="/images/authors.jpg" alt="" />
+    <h3 class="sideH3">Authors</h3>
+  </div></a>
+  <a href="/books"><div class="sideLink">
+    <img class="sideImg" src="/images/books.jpg" alt="" />
+    <h3 class="sideH3">Books</h3>
+  </div></a>
+</section>
+
+<div class="articleContainer">
 {{#books}}
   <article>
     <img class="bookCover" src="{{cover_url}}" alt="">
-    <h2>{{title}}</h2>
-    <button class="delete-btn" data-book-id="{{book_id}}" type="button" name="delete">Delete</button>
-    <a href="/books/{{book_id}}/edit"><button type="button" name="edit">Edit Book</button></a>
+    <div class="lineGrp">
+      <a href="/books/{{book_id}}"><h2 class="name">{{title}}</h2></a>
+      <div class="buttonGrp">
+        <button class="delete-btn btn btn-primary" data-book-id="{{book_id}}" type="button" name="delete">Delete</button>
+        <a href="/books/{{book_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Book</button></a>
+      </div>
+    </div>
     <h3>
       {{authors}}
     </h3>
@@ -13,7 +45,7 @@
     <p>{{description}}</p>
   </article>
 {{/books}}
-
+</div>
 
 <script type="text/javascript">
 $('.delete-btn').on('click', function(){

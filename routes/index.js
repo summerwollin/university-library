@@ -13,21 +13,21 @@ router.get('/books', function(req, res, next) {
   .innerJoin('authors', 'bibliographies.author_id', 'authors.id')
   .orderBy('books.id')
   .then(function(results) {
-    var prevElement = null;
-    var concatenatedResults = [];
-    results.forEach(function(element) {
-      console.log('bookid>>', element.book_id);
-      console.log('booktitle>>', element.first_name);
-      if ((prevElement === null) || (prevElement.book_id !== element.book_id)) {
-        element.authors = element.first_name + " " + element.last_name;
-        concatenatedResults.push(element);
-        prevElement = element;
-      }
-      else {
-        prevElement.authors += ", " + element.first_name + " " + element.last_name;
-      }
+    knex('books').count('id')
+    .then(function(numBooks) {
+      var prevElement = null;
+      var concatenatedResults = [];
+      results.forEach(function(element) {
+        if ((prevElement === null) || (prevElement.book_id !== element.book_id)) {
+          element.authors = element.first_name + " " + element.last_name;
+          concatenatedResults.push(element);
+          prevElement = element;
+        } else {
+          prevElement.authors += ", " + element.first_name + " " + element.last_name;
+        }
+      })
+      res.render('books', {books: concatenatedResults, numBooks: numBooks[0].count});
     })
-    res.render('books', {books: concatenatedResults});
   });
 });
 
@@ -58,6 +58,22 @@ router.post('/books/add', function(req, res, next) {
       res.redirect('/books');
     });
   });
+});
+
+router.post('/books/filter', function(req, res, next){
+  var filterObj = {};
+
+  if (req.body.genre !== '') {
+    filterObj.genre = req.body.genre;
+  }
+
+  if (req.body.title !== '') {
+    filterObj.title = req.body.title;
+  }
+
+  knex('books').where(filterObj).then(function(filtered) {
+    res.render('filterBooks', {books: filtered});
+  })
 });
 
 router.get('/books/:id', function(req, res, next) {
@@ -121,19 +137,22 @@ router.get('/authors', function(req, res, next) {
   .innerJoin('books', 'bibliographies.book_id', 'books.id')
   .orderBy('authors.id')
   .then(function(results) {
-    var prevElement = null;
-    var concatenatedResults = [];
-    results.forEach(function(element) {
-      if ((prevElement === null) || (prevElement.author_id !== element.author_id)) {
-        element.books = element.title;
-        concatenatedResults.push(element);
-        prevElement = element;
-      }
-      else {
-        prevElement.books += ", " + element.title;
-      }
-    })
-    res.render('authors', {authors: concatenatedResults});
+    knex('authors').count('id')
+    .then(function(numAuthors) {
+      var prevElement = null;
+      var concatenatedResults = [];
+      results.forEach(function(element) {
+        if ((prevElement === null) || (prevElement.author_id !== element.author_id)) {
+          element.books = element.title;
+          concatenatedResults.push(element);
+          prevElement = element;
+        }
+        else {
+          prevElement.books += ", " + element.title;
+        }
+      })
+      res.render('authors', {authors: concatenatedResults, numAuthors: numAuthors[0].count});
+    });
   });
 });
 
@@ -163,6 +182,22 @@ router.post('/authors/add', function(req, res, next) {
       res.redirect('/authors');
     });
   });
+});
+
+router.post('/authors/filter', function(req, res, next){
+  var filterObj = {};
+
+  if (req.body.first !== '') {
+    filterObj.first_name = req.body.first;
+  }
+
+  if (req.body.last !== '') {
+    filterObj.last_name = req.body.last;
+  }
+
+  knex('authors').where(filterObj).then(function(filtered) {
+    res.render('filterAuthors', {authors: filtered});
+  })
 });
 
 router.get('/authors/:id', function(req, res, next) {

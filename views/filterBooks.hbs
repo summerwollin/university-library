@@ -10,23 +10,23 @@
 </section>
 
 <div class="articleContainer">
-<article>
-    <img class="bookCover" src="{{book.cover_url}}" alt="">
+{{#books}}
+  <article>
+    <img class="bookCover" src="{{cover_url}}" alt="">
     <div class="lineGrp">
-      <h2 class="name">{{book.title}}</h2>
+      <a href="/books/{{book_id}}"><h2 class="name">{{title}}</h2></a>
       <div class="buttonGrp">
-        <button class="delete-btn btn btn-primary" data-book-id="{{book.id}}" type="button" name="delete">Delete</button>
+        <button class="delete-btn btn btn-primary" data-book-id="{{book_id}}" type="button" name="delete">Delete</button>
         <a href="/books/{{book_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Book</button></a>
       </div>
     </div>
     <h3>
-    {{#authors}}
-  {{first_name}} {{last_name}},
-    {{/authors}}
-  </h3>
-    <h3><i>{{book.genre}}</i></h3>
-    <p>{{book.description}}</p>
-</article>
+      {{authors}}
+    </h3>
+    <h3><i>{{genre}}</i></h3>
+    <p>{{description}}</p>
+  </article>
+{{/books}}
 </div>
 
 <script type="text/javascript">

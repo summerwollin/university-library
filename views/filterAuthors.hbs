@@ -10,32 +10,32 @@
 </section>
 
 <div class="articleContainer">
-<article>
-    <img class="bookCover" src="{{book.cover_url}}" alt="">
+{{#authors}}
+  <article>
+    <img class="portrait" src="{{portrait_url}}" alt="">
     <div class="lineGrp">
-      <h2 class="name">{{book.title}}</h2>
+      <a href="/authors/{{author_id}}"><h2 class="name">{{first_name}} {{last_name}}</h2></a>
       <div class="buttonGrp">
-        <button class="delete-btn btn btn-primary" data-book-id="{{book.id}}" type="button" name="delete">Delete</button>
-        <a href="/books/{{book_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Book</button></a>
+        <button class="delete-btn btn btn-primary" data-author-id="{{author_id}}" type="button" name="delete">Delete</button>
+        <a href="/authors/{{author_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Author</button></a>
       </div>
     </div>
+
     <h3>
-    {{#authors}}
-  {{first_name}} {{last_name}},
-    {{/authors}}
+    {{books}}
   </h3>
-    <h3><i>{{book.genre}}</i></h3>
-    <p>{{book.description}}</p>
-</article>
+    <p>{{biography}}</p>
+  </article>
+{{/authors}}
 </div>
 
 <script type="text/javascript">
 $('.delete-btn').on('click', function(){
-  var book_id = $(this).data('book-id');
+  var author_id = $(this).data('author-id');
   var article = $(this).parent();
 
   $.ajax({
-    url: '/books/' + book_id,
+    url: '/authors/' + author_id,
     type: 'DELETE',
     success: function(result) {
       $(article).slideUp();
