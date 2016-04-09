@@ -72,7 +72,14 @@ router.post('/books/filter', function(req, res, next){
   }
 
   knex('books').where(filterObj).then(function(filtered) {
+    if (req.body.limit !== '') {
+      knex('books').where(filterObj).limit(parseInt(req.body.limit))
+      .then(function(filteredLimit){
+        res.render('filterBooks', {books: filteredLimit});
+      })
+    } else {
     res.render('filterBooks', {books: filtered});
+    }
   })
 });
 
@@ -194,9 +201,15 @@ router.post('/authors/filter', function(req, res, next){
   if (req.body.last !== '') {
     filterObj.last_name = req.body.last;
   }
-
   knex('authors').where(filterObj).then(function(filtered) {
+    if (req.body.limit !== '') {
+      knex('authors').where(filterObj).limit(parseInt(req.body.limit))
+      .then(function(filteredLimit){
+        res.render('filterAuthors', {authors: filteredLimit});
+      })
+    } else {
     res.render('filterAuthors', {authors: filtered});
+    }
   })
 });
 
