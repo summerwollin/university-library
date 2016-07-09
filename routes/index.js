@@ -7,7 +7,6 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-
 router.get('/books', function(req, res, next) {
   knex('books').innerJoin('bibliographies', 'books.id', 'bibliographies.book_id')
   .innerJoin('authors', 'bibliographies.author_id', 'authors.id')
