@@ -1,9 +1,11 @@
-<a href="/authors/add"><button class="btn btn-primary" type="button" name="add">Add New Author</button></a>
-<h1>Total Authors: {{numAuthors}}</h1>
+<div class="container-fluid">
 
-<h3>Search By:</h3>
+  <button id="search" class="btn btn-primary btn-lg" name="button">Filter</button>
+  <a href="/authors/add"><button class="btn btn-primary btn-lg" type="button" name="add">Add New Author</button></a>
+  <br>
+  <br>
 
-<form action="/authors/filter" method="post">
+<form class="searchForm hideForm" action="/authors/filter" method="post">
     <div class="form-group">
         <label for="first">First Name</label>
         <input type="text" class="form-control" name="first" value="">
@@ -16,52 +18,58 @@
         <label for="first">Limit</label>
         <input type="number" class="form-control" name="limit" value="">
     </div>
-    <button class="btn btn-primary" type="submit" name="button">filter</button>
+    <button class="btn btn-primary" type="submit" name="button">Submit</button>
 </form>
 
 <main>
 
-  <section>
-    <a href="/authors"><div class="sideLink">
-      <img class="sideImg" src="/images/authors.jpg" alt="" />
-      <h3 class="sideH3">Authors</h3>
-    </div></a>
-    <a href="/books"><div class="sideLink">
-      <img class="sideImg" src="/images/books.jpg" alt="" />
-      <h3 class="sideH3">Books</h3>
-    </div></a>
-  </section>
-
 <div class="articleContainer">
+    <h1>Authors</h1>
+    <br>
+    <br>
   {{#authors}}
-    <article>
-      <img class="portrait" src="{{portrait_url}}" alt="">
-      <div class="lineGrp">
-        <a href="/authors/{{author_id}}"><h2 class="name">{{first_name}} {{last_name}}</h2></a>
-        <div class="buttonGrp">
-          <button class="delete-btn btn btn-primary" data-author-id="{{author_id}}" type="button" name="delete">Delete</button>
-          <a href="/authors/{{author_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Author</button></a>
-        </div>
+  <article class="slide{{book_id}}">
+    <div class="row">
+      <div class="articleImg col-md-3">
+        <a href="/authors/{{author_id}}"><img class="portrait" src="{{portrait_url}}" alt="">
       </div>
-        {{books}}
-      </h3></h3>
+      <div class="descriptionGrp col-md-8">
+        <div class="lineGrp">
+          <h2 class="name">{{first_name}} {{last_name}}</h2></a>
+          <div class="buttonGrp">
+            <button class="delete-btn btn btn-primary" data-author-id="{{author_id}}" type="button" name="delete">Delete</button>
+            <a href="/authors/{{author_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Author</button></a>
+          </div>
+        </div>
+        <h4>{{books}}</h4>
       <p>{{biography}}</p>
-    </article>
+      </div>
+    </div>
+  </article>
   {{/authors}}
 </div>
 
+
 </main>
+</div>
+<script type="text/javascript">
+  $('#search').on('click', function(){
+    $('.searchForm').toggleClass('hideForm');
+  })
+</script>
+
 
 <script type="text/javascript">
 $('.delete-btn').on('click', function(){
   var author_id = $(this).data('author-id');
   var article = $(this).parent();
+  var articleClass = ".slide" + author_id;
 
   $.ajax({
     url: '/authors/' + author_id,
     type: 'DELETE',
     success: function(result) {
-      $(article).slideUp();
+      $(articleClass).slideUp();
     }
   });
 });

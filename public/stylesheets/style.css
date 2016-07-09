@@ -1,6 +1,10 @@
 body {
-  padding: 50px;
+  /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+@font-face {
+  font-family: university;
+  src: url(University.otf);
 }
 main {
   width: 100%;
@@ -8,13 +12,41 @@ main {
 }
 .navbar {
   border: none;
-  background-color: rgb(232,232,232);
+  background-color: #c5b358;
 }
 a {
   color: #00B7FF;
 }
+a:hover {
+  text-decoration: none;
+}
+.navbar * {
+  font-family: university;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  background-color: #cfc075;
+}
+.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+  background-color: #c5b358;
+}
 .btn-primary {
-  background-color: rgb(43,61,78);
+  color: black;
+}
+
+.btn-primary {
+  background-color: #c5b358;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #cfc075;
+  border: none;
+}
+.btn-primary:focus {
+  background-color: #cfc075;
+  border: none;
+}
+.btn-primary:active:focus {
+  background-color: #cfc075;
   border: none;
 }
 .logo {
@@ -23,9 +55,13 @@ a {
 }
 .mainImg {
   height: 500px;
+  padding-left: 10px;
 }
 .caption {
   margin-left: 300px;
+}
+.caption * {
+  font-family: university;
 }
 .articleContainer {
   background-color: rgb(232,232,232);
@@ -33,6 +69,9 @@ a {
   margin-right: 150px;
   padding-top: 50px;
   padding-bottom: 50px;
+}
+.articleContainer h1 {
+  text-align: center;
 }
 section {
   margin-top: 100px;
@@ -42,6 +81,7 @@ section {
   width: 200px;
   height: 90px;
   margin-right: 400px;
+  margin-top: 50px;
 
 }
 
@@ -60,11 +100,9 @@ section {
   margin-left: 50px;
 }
 .bookCover {
-  width: 100px;
-  height: 150px;
+  width: 180px;
 }
 article {
-  width: 600px;
   margin-left: 50px;
   margin-bottom: 80px;
 }
@@ -81,4 +119,11 @@ article {
 }
 .lineGrp {
   height: 40px;
+}
+.hideForm {
+  display: none;
+}
+.portrait {
+  width: 180px;
+
 }

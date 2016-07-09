@@ -1,10 +1,10 @@
-<a href="/books/add"><button class="btn btn-primary" type="button" name="add">Add New Book</button></a>
+<div class="container-fluid">
+  <button id="search" class="btn btn-primary btn-lg" name="button">Filter</button>
+  <a href="/books/add"><button class="btn btn-primary btn-lg" type="button" name="add">Add New Book</button></a>
+  <br>
+  <br>
 
-<h1>Total Books: {{numBooks}}</h1>
-
-<h3>Filter By:</h3>
-
-<form action="/books/filter" method="post">
+<form class="searchForm hideForm" action="/books/filter" method="post">
     <div class="form-group">
         <label for="genre">Genre</label>
         <input type="text" class="form-control" name="genre" value="">
@@ -17,50 +17,57 @@
         <label for="first">Limit</label>
         <input type="number" class="form-control" name="limit" value="">
     </div>
-    <button class="btn btn-primary" type="submit" name="button">filter</button>
+    <button class="btn btn-primary" type="submit" name="button">Submit</button>
 </form>
 
-<section>
-  <a href="/authors"><div class="sideLink">
-    <img class="sideImg" src="/images/authors.jpg" alt="" />
-    <h3 class="sideH3">Authors</h3>
-  </div></a>
-  <a href="/books"><div class="sideLink">
-    <img class="sideImg" src="/images/books.jpg" alt="" />
-    <h3 class="sideH3">Books</h3>
-  </div></a>
-</section>
-
 <div class="articleContainer">
+  <h1>Books</h1>
+  <br>
+  <br>
 {{#books}}
-  <article>
-    <img class="bookCover" src="{{cover_url}}" alt="">
-    <div class="lineGrp">
-      <a href="/books/{{book_id}}"><h2 class="name">{{title}}</h2></a>
-      <div class="buttonGrp">
-        <button class="delete-btn btn btn-primary" data-book-id="{{book_id}}" type="button" name="delete">Delete</button>
-        <a href="/books/{{book_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Book</button></a>
+  <article class="slide{{book_id}}">
+    <div class="row">
+      <div class="articleImg col-md-3">
+        <a href="/books/{{book_id}}"><img class="bookCover" src="{{cover_url}}" alt="">
+      </div>
+      <div class="descriptionGrp col-md-8">
+        <div class="lineGrp">
+          <h2 class="name">{{title}}</h2></a>
+          <div class="buttonGrp">
+            <button class="delete-btn btn btn-primary" data-book-id="{{book_id}}" type="button" name="delete">Delete</button>
+            <a href="/books/{{book_id}}/edit"><button class="btn btn-primary" type="button" name="edit">Edit Book</button></a>
+          </div>
+        </div>
+        <br><br>
+        <h4>
+          {{authors}}
+        </h4>
+        <h4><i>{{genre}}</i></h4>
+        <p>{{description}}</p>
       </div>
     </div>
-    <h3>
-      {{authors}}
-    </h3>
-    <h3><i>{{genre}}</i></h3>
-    <p>{{description}}</p>
   </article>
 {{/books}}
 </div>
+</div>
+
+<script type="text/javascript">
+  $('#search').on('click', function(){
+    $('.searchForm').toggleClass('hideForm');
+  })
+</script>
 
 <script type="text/javascript">
 $('.delete-btn').on('click', function(){
   var book_id = $(this).data('book-id');
   var article = $(this).parent();
+  var articleClass = ".slide" + book_id;
 
   $.ajax({
     url: '/books/' + book_id,
     type: 'DELETE',
     success: function(result) {
-      $(article).slideUp();
+      $(articleClass).slideUp();
     }
   });
 });
